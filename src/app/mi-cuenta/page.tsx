@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { 
@@ -47,6 +47,12 @@ const DEFAULT_MEMBER: MemberData = {
 export default function MemberPortalPage() {
   const [member, setMember] = useState<MemberData>(DEFAULT_MEMBER);
   const [isSimulatingExpiry, setIsSimulatingExpiry] = useState(false);
+  const [qrTimestamp, setQrTimestamp] = useState("2026-10-15T00:00:00.000Z");
+
+  // El timestamp dinámico se asigna solo en el cliente tras el montaje, evitando el error de prerender
+  useEffect(() => {
+    setQrTimestamp(new Date().toISOString());
+  }, []);
 
   // Toggle interactivo para demostrar al pastor cómo reacciona la app si está solvente o vencido
   const toggleStatus = () => {
@@ -69,7 +75,7 @@ export default function MemberPortalPage() {
     ci: member.ci,
     status: member.status,
     plan: member.planName,
-    timestamp: new Date().toISOString(),
+    timestamp: qrTimestamp,
   });
 
   return (
@@ -281,13 +287,13 @@ export default function MemberPortalPage() {
                 </p>
               </div>
 
-              <button
-                type="button"
+              <Link
+                href="/tienda"
                 className="mt-6 flex items-center justify-between w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-bold uppercase tracking-wider text-white transition-colors cursor-pointer"
               >
                 <span>Reportar Pago</span>
-                <span className="text-[10px] text-emerald-400">Pagar</span>
-              </button>
+                <span className="text-[10px] text-emerald-400">Pagar →</span>
+              </Link>
             </div>
 
           </div>
