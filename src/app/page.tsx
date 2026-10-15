@@ -171,10 +171,12 @@ export default function HomePage() {
                 Hierro, Clases & Barra
               </span>
             </div>
-            <div className="p-4 rounded-2xl tactile-inset">
-              <span className="text-2xl sm:text-3xl font-black text-[#00E5FF] block font-mono">4 DISCIPLINAS</span>
-              <span className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider mt-1 block">
-                CrossFit, Pilates, Bike, Zumba
+            <div className="p-3.5 sm:p-4 rounded-2xl tactile-inset">
+              <span className="text-xl sm:text-3xl font-black text-[#00E5FF] block font-mono truncate">
+                4 CLASES
+              </span>
+              <span className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider mt-1 block truncate">
+                CrossFit, Bike, Pilates...
               </span>
             </div>
             <div className="p-4 rounded-2xl tactile-inset">

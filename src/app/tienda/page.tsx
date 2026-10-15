@@ -216,10 +216,10 @@ export default function TiendaPage() {
 
       </main>
 
-      {/* Panel Lateral del Carrito */}
+      {/* Panel Lateral del Carrito (Elevado sobre el BottomNav con z-[70]) */}
       {isCartOpen && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex justify-end">
-          <div className="w-full max-w-md bg-[#16191F] h-full p-6 flex flex-col justify-between shadow-2xl border-l border-white/10">
+        <div className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-md flex justify-end">
+          <div className="w-full max-w-md bg-[#16191F] h-full p-6 pb-[max(env(safe-area-inset-bottom),1.75rem)] flex flex-col justify-between shadow-2xl border-l border-white/10">
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <div className="flex items-center gap-2">
@@ -317,9 +317,9 @@ export default function TiendaPage() {
         </div>
       )}
 
-      {/* Modal de Checkout Multimoneda con Cajas Talladas */}
+      {/* Modal de Checkout Multimoneda con Cajas Talladas (z-[80]) */}
       {isCheckoutOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[80] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="w-full max-w-lg tactile-card rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => {
