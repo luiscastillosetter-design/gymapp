@@ -7,7 +7,9 @@ import {
   Clock, 
   CheckCircle2, 
   Flame, 
-  Dumbbell
+  Dumbbell,
+  Bike,
+  Sparkles
 } from "lucide-react";
 import { GYM_CONFIG } from "@/config/gym";
 
@@ -23,6 +25,7 @@ interface TimeSlot {
 }
 
 const INITIAL_SLOTS: TimeSlot[] = [
+  // Clases Grupales: CrossFit, Pilates, Zumba & Xtreme Bike
   {
     id: "slot-1",
     time: "06:00 AM - 07:00 AM",
@@ -37,25 +40,45 @@ const INITIAL_SLOTS: TimeSlot[] = [
     id: "slot-2",
     time: "07:15 AM - 08:15 AM",
     zone: "functional",
-    activity: "Pilates Reformer & Movilidad",
-    coach: "Coach Elena V.",
-    capacity: 12,
-    booked: 12,
+    activity: "Xtreme Bike: Sesión Intervalos & Potencia",
+    coach: "Coach Andrés B.",
+    capacity: 20,
+    booked: 17,
     userBooked: false,
   },
   {
     id: "slot-3",
     time: "08:30 AM - 09:30 AM",
     zone: "functional",
-    activity: "Circuitos HIIT Quema Grasa",
-    coach: "Coach Marcos R.",
-    capacity: 18,
-    booked: 8,
+    activity: "Pilates Reformer & Movilidad Articular",
+    coach: "Coach Elena V.",
+    capacity: 12,
+    booked: 12, // Lleno
     userBooked: false,
   },
   {
     id: "slot-4",
+    time: "09:45 AM - 10:45 AM",
+    zone: "functional",
+    activity: "Zumba Fitness: Cardio Bailable & Ritmo",
+    coach: "Coach Karla M.",
+    capacity: 25,
+    booked: 18,
+    userBooked: false,
+  },
+  {
+    id: "slot-5",
     time: "05:00 PM - 06:00 PM",
+    zone: "functional",
+    activity: "Xtreme Bike: Sunset Ride & Luces",
+    coach: "Coach Andrés B.",
+    capacity: 20,
+    booked: 19,
+    userBooked: false,
+  },
+  {
+    id: "slot-6",
+    time: "06:15 PM - 07:15 PM",
     zone: "functional",
     activity: "CrossFit WOD: Resistencia Olímpica",
     coach: "Coach David P.",
@@ -64,8 +87,8 @@ const INITIAL_SLOTS: TimeSlot[] = [
     userBooked: false,
   },
   {
-    id: "slot-5",
-    time: "06:15 PM - 07:15 PM",
+    id: "slot-7",
+    time: "07:30 PM - 08:30 PM",
     zone: "functional",
     activity: "Pilates Mat & Core Intenso",
     coach: "Coach Elena V.",
@@ -74,15 +97,17 @@ const INITIAL_SLOTS: TimeSlot[] = [
     userBooked: false,
   },
   {
-    id: "slot-6",
-    time: "07:30 PM - 08:30 PM",
+    id: "slot-8",
+    time: "08:30 PM - 09:30 PM",
     zone: "functional",
-    activity: "CrossFit Night WOD",
-    coach: "Coach David P.",
-    capacity: 16,
-    booked: 15,
+    activity: "Zumba Night Party: Quema Calórica",
+    coach: "Coach Karla M.",
+    capacity: 25,
+    booked: 21,
     userBooked: false,
   },
+
+  // Zona Hierro (Musculación con Aforo del Galpón)
   {
     id: "iron-1",
     time: "06:00 AM - 08:00 AM",
@@ -183,7 +208,7 @@ export default function ReservasPage() {
               {GYM_CONFIG.name}
             </span>
             <span className="text-[10px] tracking-widest text-[#00E5FF] uppercase font-bold mt-0.5 block">
-              Horarios & Reservas
+              Horarios & Clases
             </span>
           </div>
         </div>
@@ -205,11 +230,11 @@ export default function ReservasPage() {
 
       <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 py-8 flex-1 flex flex-col gap-6">
         
-        {/* Cabecera y Selector de Zona Táctil */}
+        {/* Cabecera y Filtros */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF]">
-              Control de Aforo y Clases
+              CrossFit · Pilates · Zumba · Xtreme Bike · Hierro
             </span>
             <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white mt-1">
               Agenda tu Sesión
@@ -232,7 +257,7 @@ export default function ReservasPage() {
               }`}
             >
               <Flame className="h-3.5 w-3.5" />
-              Funcional
+              Clases & Box
             </button>
             <button
               onClick={() => setSelectedZone("iron")}
@@ -246,7 +271,7 @@ export default function ReservasPage() {
           </div>
         </div>
 
-        {/* Selector de Días en Relieve Neumórfico */}
+        {/* Selector de Días */}
         <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none p-1.5 rounded-3xl tactile-inset">
           {WEEK_DAYS.map((item) => {
             const isSelected = selectedDay === item.date;
@@ -271,7 +296,7 @@ export default function ReservasPage() {
           })}
         </div>
 
-        {/* Lista de Slots con Relieve Físico */}
+        {/* Lista de Slots */}
         <div className="space-y-4 mt-2">
           {filteredSlots.map((slot) => {
             const percent = Math.round((slot.booked / slot.capacity) * 100);
@@ -299,7 +324,7 @@ export default function ReservasPage() {
                     <span className={`text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full tactile-chip ${
                       slot.zone === "functional" ? "text-[#00E5FF]" : "text-[#FF5E1A]"
                     }`}>
-                      {slot.zone === "functional" ? "Box Funcional" : "Zona Hierro"}
+                      {slot.zone === "functional" ? "Clases Grupales" : "Zona Hierro"}
                     </span>
                     <span className="text-xs font-mono text-zinc-400 flex items-center gap-1">
                       <Clock className="h-3.5 w-3.5 text-zinc-500" />
@@ -317,11 +342,11 @@ export default function ReservasPage() {
                     </p>
                   )}
 
-                  {/* Barra de Aforo Hundida */}
+                  {/* Barra de Aforo */}
                   <div className="pt-2 max-w-xs space-y-1">
                     <div className="flex items-center justify-between text-[11px] font-mono">
                       <span className="text-zinc-500">
-                        {slot.zone === "functional" ? "Cupos ocupados:" : "Aforo del galpón:"}
+                        {slot.zone === "functional" ? "Cupos apartados:" : "Aforo del galpón:"}
                       </span>
                       <span className={`font-bold ${aforoColor}`}>
                         {slot.booked}/{slot.capacity} ({percent}%)

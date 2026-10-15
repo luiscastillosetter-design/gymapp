@@ -4,7 +4,7 @@
 export const GYM_CONFIG = {
   name: "APEX HUB",
   tagline: "Performance & Functional Center",
-  shortDesc: "Mega centro de entrenamiento multizona: Galpón de Musculación de alto nivel, Box Funcional (CrossFit, Pilates, Circuitos) y Shake Bar saludable.",
+  shortDesc: "Mega centro de entrenamiento multizona: Galpón de Musculación de alto nivel, Box de Clases Grupales (CrossFit, Pilates, Zumba, Xtreme Bike) y Shake Bar saludable.",
   city: "Barquisimeto, Estado Lara",
   address: "Zona Industrial / Galpón Central, Barquisimeto",
   phone: "+58 412-0000000",
@@ -15,10 +15,10 @@ export const GYM_CONFIG = {
   currency: {
     symbol: "$",
     secondarySymbol: "Bs",
-    exchangeRate: 36.5, // Tasa referencial configurable
+    exchangeRate: 36.5,
   },
 
-  // Cuentas de Pago Habilitadas (Configuración Central)
+  // Cuentas de Pago Habilitadas
   paymentMethods: {
     pagoMovil: {
       bank: "Banco Provincial (0108)",
@@ -36,45 +36,60 @@ export const GYM_CONFIG = {
       holder: "APEX_HUB_OFFICIAL",
     },
     cash: {
-      location: "Recepcion / Caja del Galpon (Pagar al retirar)",
+      location: "Recepción / Caja del Galpón (Pagar al retirar)",
     },
   },
 
-  // Zonas del Mega Galpón
+  // Las 3 Áreas Oficiales del Mega Galpón
   zones: [
     {
       id: "iron-zone",
       name: "Zona Hierro",
       subtitle: "Musculación & Biomecánica",
       desc: "Área de peso libre, mancuernas hasta 60kg, máquinas de palanca convergente, poleas y zona de powerlifting.",
-      badge: "Acceso Libre",
+      badge: "Área 1 · Fuerza",
       features: [
         "Línea completa de máquinas guiadas y peso libre",
         "Área de cardio con caminadoras y escaladoras",
         "Pistas de trineo y zona de estiramiento",
-        "Acceso desde las 5:30 AM hasta las 10:00 PM",
+        "Acceso continuo desde las 5:30 AM hasta las 10:00 PM",
       ],
       color: "from-orange-500/20 to-transparent",
       accent: "#FF5E1A",
     },
     {
-      id: "functional-box",
-      name: "Box Funcional",
-      subtitle: "CrossFit, Pilates & Circuitos",
-      desc: "Galpón adaptado con jaulas profesionales, barras olímpicas, remadoras, assault bikes y reformer para pilates.",
-      badge: "Clases Guiadas",
+      id: "functional-classes",
+      name: "Box Funcional & Clases",
+      subtitle: "CrossFit, Pilates, Zumba & Xtreme Bike",
+      desc: "Espacio adaptado para clases dinámicas de alta energía: jaulas de CrossFit, Pilates Reformer/Mat, salón de Zumba y estudio de Xtreme Bike con sonido e iluminación.",
+      badge: "Área 2 · Clases",
       features: [
-        "WODs diarios dirigidos por coaches certificados",
-        "Sesiones de Pilates y movilidad articular",
-        "Circuitos HIIT para quema de grasa y resistencia",
-        "Cupos limitados por hora para máxima atención",
+        "CrossFit WODs diarios con coaches certificados",
+        "Pilates Reformer y movilidad articular",
+        "Sesiones de Zumba Fitness y cardio bailable",
+        "Estudio de Xtreme Bike de alta potencia",
       ],
       color: "from-cyan-500/20 to-transparent",
       accent: "#00E5FF",
     },
+    {
+      id: "shake-bar",
+      name: "APEX Shake Bar",
+      subtitle: "Nutrición Saludable & Pro-Shop",
+      desc: "Barra integral dentro del galpón: merengadas de proteína isolatada, pre-entrenos, creatina, snacks y accesorios deportivos (fajas, guantes, toallas).",
+      badge: "Área 3 · La Barra",
+      features: [
+        "Batidos proteicos preparados al instante",
+        "Pre-entrenos, hidratación y cafeína en barra",
+        "Pro-Shop: fajas lumbares, calleras, guantes y toallas",
+        "Pre-orden desde la app para recoger al terminar",
+      ],
+      color: "from-amber-500/20 to-transparent",
+      accent: "#F59E0B",
+    },
   ],
 
-  // Catálogo de Membresías y Pases
+  // Catálogo Oficial de Membresías y Pases
   plans: [
     {
       id: "day-pass-single",
@@ -85,7 +100,7 @@ export const GYM_CONFIG = {
       popular: false,
       desc: "Entrena un día completo en el área de tu preferencia.",
       features: [
-        "Acceso a Zona Hierro O a 1 clase de CrossFit/Pilates",
+        "Acceso a Zona Hierro O a 1 clase (CrossFit, Pilates, Zumba o Bike)",
         "Uso de duchas y lockers",
         "Sin matrícula de inscripción",
       ],
@@ -98,10 +113,10 @@ export const GYM_CONFIG = {
       price: 8,
       period: "por día",
       popular: false,
-      desc: "Acceso libre a ambas zonas durante toda la jornada.",
+      desc: "Acceso libre a ambas áreas durante toda la jornada.",
       features: [
         "Musculación libre todo el día",
-        "Participación en 1 clase del Box Funcional",
+        "Participación en 1 clase grupal guiada",
         "1 Bebida hidratante en el Shake Bar",
         "Uso completo de instalaciones",
       ],
@@ -110,11 +125,11 @@ export const GYM_CONFIG = {
     {
       id: "iron-monthly",
       name: "Membresía Hierro",
-      category: "Plan Mensual",
+      category: "Plan Mensual (Musculación)",
       price: 35,
       period: "mes",
       popular: false,
-      desc: "Para los apasionados de las pesas y el fisicoculturismo.",
+      desc: "Para los apasionados de las pesas, biomecánica y fisicoculturismo.",
       features: [
         "Acceso ilimitado a la Zona Hierro (Musculación)",
         "Entrada libre en todo el horario operativo",
@@ -124,17 +139,34 @@ export const GYM_CONFIG = {
       cta: "Elegir Hierro",
     },
     {
+      id: "functional-monthly",
+      name: "Membresía Clases & Box",
+      category: "Plan Mensual (Clases Grupales)",
+      price: 45,
+      period: "mes",
+      popular: false,
+      desc: "Pase libre a todas las disciplinas: CrossFit, Pilates, Zumba y Xtreme Bike.",
+      features: [
+        "CrossFit WODs ilimitados",
+        "Clases de Pilates (Reformer & Mat)",
+        "Sesiones de Zumba Fitness y ritmo",
+        "Salón de Xtreme Bike sin límite de reservas",
+        "Pase QR digital en la app",
+      ],
+      cta: "Elegir Clases",
+    },
+    {
       id: "all-access-black",
       name: "All-Access Black",
       category: "Membresía Total (Ambas Zonas)",
       price: 55,
       period: "mes",
       popular: true,
-      desc: "El pase definitivo: entrena fuerza, asiste a CrossFit y Pilates sin restricciones.",
+      desc: "El pase definitivo: entrena en la Zona Hierro y asiste a todas las clases grupales sin restricciones.",
       features: [
         "Acceso ilimitado a Zona Hierro (Musculación)",
-        "Reservas ilimitadas de clases (CrossFit, Pilates, HIIT)",
-        "Pase QR prioritario en recepción",
+        "Todas las clases: CrossFit, Pilates, Zumba y Xtreme Bike",
+        "Pase QR prioritario en torniquete",
         "10% de descuento continuo en el Shake Bar & Tienda",
         "Invita a un amigo 1 vez al mes",
       ],
