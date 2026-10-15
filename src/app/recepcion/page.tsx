@@ -166,68 +166,76 @@ export default function RecepcionPage() {
 
   return (
     <div className="min-h-screen bg-[#0D0F12] text-zinc-100 flex flex-col font-sans">
-      <header className="sticky top-0 z-40 bg-[#0D0F12]/95 backdrop-blur-xl border-b border-white/10 px-6 lg:px-12 py-3.5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      {/* 1. Header de Recepción Limpio y Desahogado */}
+      <header className="sticky top-0 z-40 bg-[#0D0F12]/95 backdrop-blur-xl border-b border-white/10 px-4 sm:px-6 lg:px-12 py-3 flex items-center justify-between gap-3">
+        {/* Lado Izquierdo: Volver + Marca */}
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
           <Link
             href="/"
-            className="p-2.5 rounded-2xl tactile-btn-dark text-zinc-400 hover:text-white transition-colors"
+            className="p-2 sm:p-2.5 rounded-2xl tactile-btn-dark text-zinc-400 hover:text-white transition-colors shrink-0"
             title="Volver a la portada"
+            aria-label="Volver"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </Link>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-base font-black tracking-wider uppercase text-white block leading-none">
-                {GYM_CONFIG.name}
-              </span>
-              <span className="px-2.5 py-0.5 rounded-full tactile-chip text-[#FF5E1A] font-mono text-[9px] font-black uppercase tracking-widest">
+          
+          <div className="min-w-0">
+            <span className="text-sm sm:text-base font-black tracking-wider uppercase text-white block leading-tight truncate">
+              {GYM_CONFIG.name}
+            </span>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5E1A] animate-pulse shrink-0" />
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#FF5E1A] truncate">
                 Torniquete & Counter
               </span>
             </div>
-            <span className="text-[10px] tracking-widest text-zinc-500 uppercase font-bold mt-0.5 block">
-              Torre de Control de Accesos
-            </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl tactile-inset">
+        {/* Lado Derecho: Contador de Aforo (PC) + Botón de Acceso Rápido */}
+        <div className="flex items-center gap-2.5 shrink-0">
+          <div className="hidden md:flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl tactile-inset">
             <Users className="h-4 w-4 text-[#00E5FF]" />
-            <div>
-              <span className="text-[10px] text-zinc-400 uppercase font-bold block leading-none">
-                Aforo en Galpón:
+            <div className="leading-tight">
+              <span className="text-[9px] text-zinc-400 uppercase font-bold block">
+                Aforo Galpón
               </span>
-              <span className="text-sm font-black font-mono text-white">
-                {totalInside} Atletas Activos
+              <span className="text-xs font-black font-mono text-white">
+                {totalInside} Atletas
               </span>
             </div>
           </div>
 
           <Link
             href="/mi-cuenta"
-            className="tactile-btn-dark px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider text-zinc-300 hover:text-white"
+            className="tactile-btn-dark flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold uppercase tracking-wider text-zinc-200 hover:text-white"
           >
-            Ver Carnet Socio →
+            <QrCode className="h-3.5 w-3.5 text-[#00E5FF] shrink-0" />
+            <span className="hidden sm:inline">Ver Carnet Socio</span>
+            <span className="sm:hidden font-mono">Socio</span>
+            <span className="hidden sm:inline">→</span>
           </Link>
         </div>
       </header>
 
+      {/* 2. Contenedor de Operaciones */}
       <main className="max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 flex-1 flex flex-col gap-6">
         
-        <div className="flex items-center justify-between border-b border-white/10 pb-4">
-          <div className="inline-flex p-1.5 rounded-2xl tactile-inset">
+        {/* Selector de Pestañas: Check-in vs Venta de Pase Diario */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+          <div className="inline-flex p-1.5 rounded-2xl tactile-inset w-full sm:w-auto">
             <button
               onClick={() => setActiveTab("checkin")}
-              className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+              className={`flex-1 sm:flex-initial px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 ${
                 activeTab === "checkin" ? "tactile-btn-orange text-zinc-950" : "text-zinc-400 hover:text-white"
               }`}
             >
               <QrCode className="h-4 w-4" />
-              <span>Escáner de Torniquete</span>
+              <span>Escáner Torniquete</span>
             </button>
             <button
               onClick={() => setActiveTab("pase-diario")}
-              className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+              className={`flex-1 sm:flex-initial px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 ${
                 activeTab === "pase-diario" ? "tactile-btn-cyan text-zinc-950" : "text-zinc-400 hover:text-white"
               }`}
             >
@@ -236,19 +244,20 @@ export default function RecepcionPage() {
             </button>
           </div>
 
-          <div className="hidden md:flex items-center gap-2">
-            <span className="text-[10px] font-bold uppercase text-zinc-500">Demostración al Pastor:</span>
+          {/* Botones de demostración rápida */}
+          <div className="flex items-center justify-end gap-2">
+            <span className="text-[10px] font-bold uppercase text-zinc-500 hidden sm:inline">Simular:</span>
             <button
               onClick={simulateScanGranted}
-              className="px-3 py-1.5 rounded-xl tactile-btn-dark text-emerald-400 text-[11px] font-bold uppercase tracking-wider cursor-pointer border-emerald-500/30"
+              className="px-3 py-1.5 rounded-xl tactile-btn-dark text-emerald-400 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider cursor-pointer border-emerald-500/30"
             >
-              Simular Solvente (Verde)
+              Solvente (Verde)
             </button>
             <button
               onClick={simulateScanDenied}
-              className="px-3 py-1.5 rounded-xl tactile-btn-dark text-rose-400 text-[11px] font-bold uppercase tracking-wider cursor-pointer border-rose-500/30"
+              className="px-3 py-1.5 rounded-xl tactile-btn-dark text-rose-400 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider cursor-pointer border-rose-500/30"
             >
-              Simular Vencido (Rojo)
+              Vencido (Rojo)
             </button>
           </div>
         </div>
@@ -259,38 +268,38 @@ export default function RecepcionPage() {
             <div className="lg:col-span-7 space-y-4">
               
               {scanResult ? (
-                <div className={`p-6 sm:p-8 rounded-3xl transition-all ${
+                <div className={`p-5 sm:p-8 rounded-3xl transition-all ${
                   scanResult.status === "granted" ? "tactile-card-cyan" : "tactile-card border-rose-500/60"
                 }`}>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div className="flex items-center gap-3 min-w-0">
                       {scanResult.status === "granted" ? (
-                        <div className="h-14 w-14 rounded-2xl tactile-btn-cyan text-zinc-950 flex items-center justify-center font-black">
-                          <CheckCircle2 className="h-8 w-8" />
+                        <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl tactile-btn-cyan text-zinc-950 flex items-center justify-center font-black shrink-0">
+                          <CheckCircle2 className="h-7 w-7 sm:h-8 sm:w-8" />
                         </div>
                       ) : (
-                        <div className="h-14 w-14 rounded-2xl bg-rose-500 text-zinc-950 flex items-center justify-center font-black shadow-lg">
-                          <XCircle className="h-8 w-8" />
+                        <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-rose-500 text-zinc-950 flex items-center justify-center font-black shadow-lg shrink-0">
+                          <XCircle className="h-7 w-7 sm:h-8 sm:w-8" />
                         </div>
                       )}
-                      <div>
-                        <span className={`text-[11px] font-black uppercase tracking-widest block ${
+                      <div className="min-w-0">
+                        <span className={`text-[10px] sm:text-[11px] font-black uppercase tracking-widest block truncate ${
                           scanResult.status === "granted" ? "text-[#00E5FF]" : "text-rose-400"
                         }`}>
                           {scanResult.status === "granted" ? "Torniquete Abierto · Pase Permitido" : "Acceso Denegado"}
                         </span>
-                        <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+                        <h2 className="text-xl sm:text-3xl font-black uppercase tracking-tight text-white truncate">
                           {scanResult.name}
                         </h2>
                       </div>
                     </div>
 
-                    <span className="text-xs font-mono text-zinc-400 px-3 py-1 rounded-full tactile-inset">
+                    <span className="text-[11px] font-mono text-zinc-400 px-2.5 py-1 rounded-full tactile-inset shrink-0">
                       {scanResult.timestamp}
                     </span>
                   </div>
 
-                  <div className="p-4 rounded-2xl tactile-inset space-y-2.5 mt-4 text-xs font-mono">
+                  <div className="p-4 rounded-2xl tactile-inset space-y-2 mt-4 text-xs font-mono">
                     <div className="flex justify-between">
                       <span className="text-zinc-500">C.I / Documento:</span>
                       <span className="text-white font-bold">{scanResult.ci}</span>
@@ -310,7 +319,7 @@ export default function RecepcionPage() {
                     )}
                   </div>
 
-                  <div className="mt-6 flex gap-3">
+                  <div className="mt-6 flex flex-col sm:flex-row gap-2.5">
                     {scanResult.status === "denied" && (
                       <button
                         onClick={() => alert("Cobro de mensualidad registrado")}
@@ -328,7 +337,7 @@ export default function RecepcionPage() {
                   </div>
                 </div>
               ) : (
-                <div className="p-8 sm:p-12 rounded-3xl tactile-card text-center flex flex-col items-center justify-center min-h-[300px]">
+                <div className="p-8 sm:p-12 rounded-3xl tactile-card text-center flex flex-col items-center justify-center min-h-[280px]">
                   <div className="h-16 w-16 rounded-3xl tactile-inset text-[#FF5E1A] flex items-center justify-center mb-4">
                     <QrCode className="h-8 w-8 animate-pulse" />
                   </div>
@@ -356,20 +365,20 @@ export default function RecepcionPage() {
                 </div>
               )}
 
-              {/* Búsqueda Manual con Input Hundido */}
-              <div className="p-2 sm:p-3 rounded-2xl tactile-inset flex items-center gap-3">
-                <Search className="h-5 w-5 text-zinc-500 shrink-0 ml-2" />
+              {/* Búsqueda Manual */}
+              <div className="p-2 sm:p-2.5 rounded-2xl tactile-inset flex items-center gap-2">
+                <Search className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-500 shrink-0 ml-2" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="¿Sin teléfono? Busca por Cédula (V-...) o Nombre..."
-                  className="w-full bg-transparent text-xs text-white placeholder-zinc-500 outline-none py-2"
+                  placeholder="Busca por Cédula (V-...) o Nombre..."
+                  className="w-full bg-transparent text-xs text-white placeholder-zinc-500 outline-none py-1.5"
                 />
                 {searchQuery && (
                   <button
                     onClick={simulateScanGranted}
-                    className="px-4 py-2 rounded-xl tactile-btn-cyan text-zinc-950 text-xs font-black uppercase tracking-wider cursor-pointer shrink-0 mr-1"
+                    className="px-3.5 py-2 rounded-xl tactile-btn-cyan text-zinc-950 text-xs font-black uppercase tracking-wider cursor-pointer shrink-0"
                   >
                     Validar
                   </button>
@@ -377,10 +386,10 @@ export default function RecepcionPage() {
               </div>
             </div>
 
-            {/* Log de Entradas Recientes con Tarjetas Táctiles */}
-            <div className="lg:col-span-5 rounded-3xl tactile-card p-6 flex flex-col justify-between">
+            {/* Log de Entradas Recientes */}
+            <div className="lg:col-span-5 rounded-3xl tactile-card p-5 sm:p-6 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+                <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-3">
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4 text-[#FF5E1A]" />
                     <h3 className="text-xs font-black uppercase tracking-wider text-white">
@@ -390,16 +399,16 @@ export default function RecepcionPage() {
                   <span className="text-[10px] text-zinc-500 font-mono">En Vivo</span>
                 </div>
 
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   {recentLog.map((item) => (
                     <div
                       key={item.id}
-                      className="p-3.5 rounded-2xl tactile-inset flex items-center justify-between gap-3 text-xs"
+                      className="p-3 rounded-2xl tactile-inset flex items-center justify-between gap-2.5 text-xs"
                     >
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
-                          <span className={`h-2.5 w-2.5 rounded-full ${item.status === "granted" ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" : "bg-rose-400 shadow-[0_0_8px_rgba(251,113,133,0.8)]"}`} />
-                          <h4 className="font-bold text-white truncate">{item.name}</h4>
+                          <span className={`h-2 w-2 rounded-full shrink-0 ${item.status === "granted" ? "bg-emerald-400" : "bg-rose-400"}`} />
+                          <h4 className="font-bold text-white truncate text-xs">{item.name}</h4>
                         </div>
                         <p className="text-[10px] text-zinc-500 font-mono mt-0.5 truncate">
                           {item.ci} · {item.plan}
@@ -419,7 +428,7 @@ export default function RecepcionPage() {
                 </div>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-white/5 text-center">
+              <div className="pt-3 mt-3 border-t border-white/5 text-center">
                 <span className="text-[10px] font-mono text-zinc-500">
                   Torniquete sincronizado con base de datos central
                 </span>
