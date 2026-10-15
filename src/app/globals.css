@@ -7,6 +7,7 @@
 
 body {
   background-color: var(--background);
+  background-image: radial-gradient(circle at 50% 0%, #171b22 0%, #0d0f12 70%);
   color: var(--foreground);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   overflow-x: hidden;
@@ -16,7 +17,150 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Efecto sutil para resaltar tarjetas en modo oscuro */
-.border-subtle {
-  border-color: rgba(255, 255, 255, 0.08);
+/* ==========================================================================
+   MOTOR UI DE RELIEVE TÁCTIL 3D (DARK NEUMORPHISM & INDUSTRIAL ELEVATION)
+   ========================================================================== */
+
+/* 1. Superficie Elevada (Cards Nivel 2 y 3) */
+.tactile-card {
+  background: linear-gradient(145deg, #191d24, #12151a);
+  box-shadow:
+    10px 10px 22px #07080a,
+    -6px -6px 16px rgba(38, 44, 56, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 2. Superficie Destacada con Bisel Naranja Fénix */
+.tactile-card-orange {
+  background: linear-gradient(145deg, #211917, #14161b);
+  box-shadow:
+    0 14px 30px rgba(255, 94, 26, 0.14),
+    10px 10px 22px #060709,
+    -6px -6px 16px rgba(45, 35, 30, 0.4),
+    inset 0 1.5px 1px rgba(255, 130, 70, 0.35);
+  border: 1px solid rgba(255, 94, 26, 0.45);
+}
+
+/* 3. Superficie Destacada con Bisel Cian Neón */
+.tactile-card-cyan {
+  background: linear-gradient(145deg, #152126, #13161c);
+  box-shadow:
+    0 14px 30px rgba(0, 229, 255, 0.12),
+    10px 10px 22px #060709,
+    inset 0 1.5px 1px rgba(0, 229, 255, 0.35);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+}
+
+/* 4. Cavidad Hundida / Tallada (Inputs, Pistas de Tabs, Cajas de Datos) */
+.tactile-inset {
+  background: #0a0c0f;
+  box-shadow:
+    inset 4px 4px 9px #050608,
+    inset -3px -3px 8px rgba(34, 40, 50, 0.6),
+    0 1px 0 rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.65);
+}
+
+/* 5. Botón Principal 3D - Naranja Fénix */
+.tactile-btn-orange {
+  background: linear-gradient(180deg, #ff763b 0%, #ff5e1a 55%, #d94304 100%);
+  box-shadow:
+    0 6px 16px rgba(255, 94, 26, 0.38),
+    0 3px 6px rgba(0, 0, 0, 0.75),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 145, 90, 0.35);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tactile-btn-orange:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1.5px);
+  box-shadow:
+    0 9px 22px rgba(255, 94, 26, 0.5),
+    0 4px 8px rgba(0, 0, 0, 0.8),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.55),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.4);
+}
+
+.tactile-btn-orange:active {
+  transform: translateY(1.5px);
+  box-shadow:
+    0 2px 6px rgba(255, 94, 26, 0.25),
+    inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* 6. Botón Secundario 3D - Cian Neón */
+.tactile-btn-cyan {
+  background: linear-gradient(180deg, #52eeff 0%, #00e5ff 55%, #00b3cc 100%);
+  box-shadow:
+    0 6px 16px rgba(0, 229, 255, 0.32),
+    0 3px 6px rgba(0, 0, 0, 0.75),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(130, 243, 255, 0.4);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tactile-btn-cyan:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1.5px);
+}
+
+.tactile-btn-cyan:active {
+  transform: translateY(1.5px);
+}
+
+/* 7. Botón Táctil Oscuro Mate (Silicona / Carbón) */
+.tactile-btn-dark {
+  background: linear-gradient(145deg, #1e232c, #13161c);
+  box-shadow:
+    5px 5px 11px #07080a,
+    -3px -3px 8px rgba(42, 49, 62, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.2s ease;
+}
+
+.tactile-btn-dark:hover {
+  background: linear-gradient(145deg, #232934, #161920);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.tactile-btn-dark:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 3px 3px 6px #07080a,
+    inset -2px -2px 5px rgba(42, 49, 62, 0.35);
+}
+
+/* 8. Chips / Pastillas con Relieve */
+.tactile-chip {
+  background: linear-gradient(180deg, #1d222b 0%, #14171e 100%);
+  box-shadow:
+    3px 3px 7px #07080a,
+    -2px -2px 5px rgba(40, 46, 58, 0.35),
+    inset 0 1px 0.5px rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* 9. Iconos Cuadrados con Marco Iluminado (Estilo Imagen Elementos) */
+.tactile-icon-box-orange {
+  background: linear-gradient(145deg, #14171d, #0d0f13);
+  box-shadow:
+    4px 4px 10px #060709,
+    -2px -2px 6px rgba(255, 94, 26, 0.15),
+    inset 2px 2px 5px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 1.5px rgba(255, 94, 26, 0.45);
+}
+
+.tactile-icon-box-cyan {
+  background: linear-gradient(145deg, #14171d, #0d0f13);
+  box-shadow:
+    4px 4px 10px #060709,
+    -2px -2px 6px rgba(0, 229, 255, 0.15),
+    inset 2px 2px 5px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 1.5px rgba(0, 229, 255, 0.45);
 }

@@ -14,7 +14,6 @@ import {
   Coins, 
   DollarSign, 
   Banknote, 
-  QrCode, 
   CheckCircle2, 
   X,
   Clock,
@@ -40,7 +39,6 @@ export default function TiendaPage() {
   const [orderConfirmed, setOrderConfirmed] = useState(false);
   const [pickupTime, setPickupTime] = useState("al_terminar");
 
-  // Agregar al carrito
   const addToCart = (product: typeof GYM_CONFIG.products[0]) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product.id);
@@ -94,12 +92,11 @@ export default function TiendaPage() {
 
   return (
     <div className="min-h-screen bg-[#0D0F12] text-zinc-100 flex flex-col">
-      {/* 1. Header con retorno y botón del Carrito */}
-      <header className="sticky top-0 z-40 bg-[#0D0F12]/90 backdrop-blur-md border-b border-white/10 px-6 lg:px-12 py-4 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#0D0F12]/90 backdrop-blur-xl border-b border-white/10 px-6 lg:px-12 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             href="/mi-cuenta"
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
+            className="p-2.5 rounded-2xl tactile-btn-dark text-zinc-400 hover:text-white transition-colors"
             title="Volver a mi cuenta"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -108,31 +105,28 @@ export default function TiendaPage() {
             <span className="text-base font-black tracking-wider uppercase text-white block leading-none">
               {GYM_CONFIG.name}
             </span>
-            <span className="text-[10px] tracking-widest text-[#FF5E1A] uppercase font-bold">
+            <span className="text-[10px] tracking-widest text-[#FF5E1A] uppercase font-bold mt-0.5 block">
               Shake Bar & Pro-Shop
             </span>
           </div>
         </div>
 
-        {/* Botón Carrito Flotante / Contador */}
         <button
           onClick={() => setIsCartOpen(true)}
-          className="relative p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white flex items-center gap-2 cursor-pointer transition-all"
+          className="relative p-3 rounded-2xl tactile-btn-dark text-white flex items-center gap-2 cursor-pointer"
         >
           <ShoppingCart className="h-5 w-5 text-[#00E5FF]" />
           <span className="text-xs font-mono font-bold">${totalUsd.toFixed(2)}</span>
           {totalItems > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-[#FF5E1A] text-zinc-950 font-black text-[10px] flex items-center justify-center shadow-lg">
+            <span className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full tactile-btn-orange text-zinc-950 font-black text-[10px] flex items-center justify-center">
               {totalItems}
             </span>
           )}
         </button>
       </header>
 
-      {/* 2. Cuerpo de la Tienda */}
       <main className="max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 flex-1 flex flex-col gap-8">
         
-        {/* Cabecera y Selector de Categorías */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#FF5E1A]">
@@ -143,48 +137,48 @@ export default function TiendaPage() {
             </h1>
           </div>
 
-          <div className="inline-flex p-1 rounded-2xl bg-[#16191F] border border-white/10 self-start sm:self-auto">
+          <div className="inline-flex p-1 rounded-2xl tactile-inset self-start sm:self-auto">
             <button
               onClick={() => setSelectedCategory("all")}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                selectedCategory === "all" ? "bg-white text-zinc-950 shadow-md" : "text-zinc-400 hover:text-white"
+              className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+                selectedCategory === "all" ? "tactile-btn-orange text-zinc-950" : "text-zinc-400 hover:text-white"
               }`}
             >
               Todo
             </button>
             <button
               onClick={() => setSelectedCategory("shakebar")}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                selectedCategory === "shakebar" ? "bg-[#FF5E1A] text-zinc-950 shadow-md" : "text-zinc-400 hover:text-white"
+              className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+                selectedCategory === "shakebar" ? "tactile-btn-orange text-zinc-950" : "text-zinc-400 hover:text-white"
               }`}
             >
               🥤 Shake Bar
             </button>
             <button
               onClick={() => setSelectedCategory("proshop")}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                selectedCategory === "proshop" ? "bg-[#00E5FF] text-zinc-950 shadow-md" : "text-zinc-400 hover:text-white"
+              className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+                selectedCategory === "proshop" ? "tactile-btn-cyan text-zinc-950" : "text-zinc-400 hover:text-white"
               }`}
             >
-              🥊 Pro-Shop (Accesorios)
+              🥊 Pro-Shop
             </button>
           </div>
         </div>
 
-        {/* Cuadrícula de Productos */}
+        {/* Cuadrícula de Productos con Relieve */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((p) => (
             <div
               key={p.id}
-              className="rounded-3xl bg-[#16191F] border border-white/10 p-6 flex flex-col justify-between hover:border-white/25 transition-all shadow-xl"
+              className="rounded-3xl tactile-card p-6 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-3xl">{p.image}</span>
-                  <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full ${
-                    p.category === "shakebar" 
-                      ? "bg-orange-500/10 text-[#FF5E1A] border border-orange-500/20" 
-                      : "bg-cyan-500/10 text-[#00E5FF] border border-cyan-500/20"
+                  <div className="h-14 w-14 rounded-2xl tactile-inset flex items-center justify-center text-3xl">
+                    {p.image}
+                  </div>
+                  <span className={`text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full tactile-chip ${
+                    p.category === "shakebar" ? "text-[#FF5E1A]" : "text-[#00E5FF]"
                   }`}>
                     {p.badge}
                   </span>
@@ -210,7 +204,7 @@ export default function TiendaPage() {
 
                 <button
                   onClick={() => addToCart(p)}
-                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-[#FF5E1A] hover:text-zinc-950 text-white text-xs font-black uppercase tracking-wider transition-all cursor-pointer shadow-md"
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl tactile-btn-orange text-zinc-950 text-xs font-black uppercase tracking-wider cursor-pointer"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Agregar</span>
@@ -222,9 +216,9 @@ export default function TiendaPage() {
 
       </main>
 
-      {/* 3. Panel Lateral del Carrito */}
+      {/* Panel Lateral del Carrito */}
       {isCartOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex justify-end">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex justify-end">
           <div className="w-full max-w-md bg-[#16191F] h-full p-6 flex flex-col justify-between shadow-2xl border-l border-white/10">
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
@@ -236,13 +230,12 @@ export default function TiendaPage() {
                 </div>
                 <button
                   onClick={() => setIsCartOpen(false)}
-                  className="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white"
+                  className="p-2 rounded-xl tactile-btn-dark text-zinc-400 hover:text-white"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
-              {/* Lista de ítems */}
               <div className="py-4 space-y-3 max-h-[55vh] overflow-y-auto">
                 {cart.length === 0 ? (
                   <div className="py-12 text-center text-zinc-500 text-xs">
@@ -252,7 +245,7 @@ export default function TiendaPage() {
                   cart.map((item) => (
                     <div
                       key={item.id}
-                      className="p-3.5 rounded-2xl bg-[#0D0F12] border border-white/5 flex items-center justify-between gap-3"
+                      className="p-3.5 rounded-2xl tactile-inset flex items-center justify-between gap-3"
                     >
                       <div className="min-w-0 flex-1">
                         <h4 className="text-xs font-bold text-white truncate">
@@ -266,7 +259,7 @@ export default function TiendaPage() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => updateQuantity(item.id, -1)}
-                          className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-zinc-300"
+                          className="p-1.5 rounded-lg tactile-btn-dark text-zinc-300"
                         >
                           <Minus className="h-3 w-3" />
                         </button>
@@ -275,7 +268,7 @@ export default function TiendaPage() {
                         </span>
                         <button
                           onClick={() => updateQuantity(item.id, 1)}
-                          className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-zinc-300"
+                          className="p-1.5 rounded-lg tactile-btn-dark text-zinc-300"
                         >
                           <Plus className="h-3 w-3" />
                         </button>
@@ -292,10 +285,9 @@ export default function TiendaPage() {
               </div>
             </div>
 
-            {/* Total y Botón Checkout */}
             {cart.length > 0 && (
               <div className="pt-4 border-t border-white/10 space-y-3">
-                <div className="space-y-1">
+                <div className="p-4 rounded-2xl tactile-inset space-y-1">
                   <div className="flex items-center justify-between text-xs text-zinc-400">
                     <span>Subtotal:</span>
                     <span className="font-mono">${totalUsd.toFixed(2)}</span>
@@ -314,7 +306,7 @@ export default function TiendaPage() {
                     setIsCartOpen(false);
                     setIsCheckoutOpen(true);
                   }}
-                  className="w-full py-3.5 rounded-xl bg-[#FF5E1A] hover:bg-[#ff7235] text-zinc-950 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl cursor-pointer"
+                  className="w-full py-4 rounded-2xl tactile-btn-orange text-zinc-950 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Continuar al Pago</span>
                   <span>→</span>
@@ -325,24 +317,24 @@ export default function TiendaPage() {
         </div>
       )}
 
-      {/* 4. Modal de Checkout Multimoneda (Binance, Pago Móvil, Zelle, Efectivo) */}
+      {/* Modal de Checkout Multimoneda con Cajas Talladas */}
       {isCheckoutOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-[#16191F] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-lg tactile-card rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => {
                 setIsCheckoutOpen(false);
                 setOrderConfirmed(false);
               }}
-              className="absolute top-5 right-5 p-2 rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white"
+              className="absolute top-5 right-5 p-2 rounded-xl tactile-btn-dark text-zinc-400 hover:text-white"
             >
               <X className="h-4 w-4" />
             </button>
 
             {orderConfirmed ? (
               <div className="text-center py-8 space-y-4">
-                <div className="h-16 w-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
-                  <CheckCircle2 className="h-8 w-8" />
+                <div className="h-16 w-16 rounded-3xl tactile-inset text-emerald-400 flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="h-9 w-9" />
                 </div>
                 <h3 className="text-2xl font-black uppercase text-white tracking-tight">
                   ¡Pedido Recibido!
@@ -350,7 +342,7 @@ export default function TiendaPage() {
                 <p className="text-xs text-zinc-400 leading-relaxed max-w-sm mx-auto">
                   Tu orden ha sido enviada al Shake Bar / Counter. Presenta tu nombre o tu Pase QR al retirar.
                 </p>
-                <div className="p-4 rounded-2xl bg-[#0D0F12] border border-white/5 text-xs font-mono text-zinc-300">
+                <div className="p-4 rounded-2xl tactile-inset text-xs font-mono text-zinc-300">
                   Total a verificar: <strong className="text-white">${totalUsd.toFixed(2)}</strong> ({paymentMethod.toUpperCase()})
                 </div>
                 <button
@@ -359,7 +351,7 @@ export default function TiendaPage() {
                     setIsCheckoutOpen(false);
                     setOrderConfirmed(false);
                   }}
-                  className="mt-4 px-8 py-3 rounded-xl bg-white text-zinc-950 font-black text-xs uppercase tracking-wider hover:bg-zinc-200"
+                  className="mt-4 px-8 py-3.5 rounded-2xl tactile-btn-orange text-zinc-950 font-black text-xs uppercase tracking-wider cursor-pointer"
                 >
                   Listo / Volver a la Tienda
                 </button>
@@ -387,10 +379,10 @@ export default function TiendaPage() {
                     <button
                       type="button"
                       onClick={() => setPickupTime("al_terminar")}
-                      className={`p-3 rounded-xl border text-left font-bold transition-all cursor-pointer ${
+                      className={`p-3.5 rounded-2xl text-left font-bold transition-all cursor-pointer ${
                         pickupTime === "al_terminar"
-                          ? "bg-white/10 text-white border-[#FF5E1A]"
-                          : "bg-[#0D0F12] text-zinc-400 border-white/5 hover:border-white/10"
+                          ? "tactile-card-orange text-white"
+                          : "tactile-inset text-zinc-400"
                       }`}
                     >
                       <Clock className="h-4 w-4 mb-1 text-[#FF5E1A]" />
@@ -399,10 +391,10 @@ export default function TiendaPage() {
                     <button
                       type="button"
                       onClick={() => setPickupTime("inmediato")}
-                      className={`p-3 rounded-xl border text-left font-bold transition-all cursor-pointer ${
+                      className={`p-3.5 rounded-2xl text-left font-bold transition-all cursor-pointer ${
                         pickupTime === "inmediato"
-                          ? "bg-white/10 text-white border-[#00E5FF]"
-                          : "bg-[#0D0F12] text-zinc-400 border-white/5 hover:border-white/10"
+                          ? "tactile-card-cyan text-white"
+                          : "tactile-inset text-zinc-400"
                       }`}
                     >
                       <Sparkles className="h-4 w-4 mb-1 text-[#00E5FF]" />
@@ -411,7 +403,7 @@ export default function TiendaPage() {
                   </div>
                 </div>
 
-                {/* Selector de Método de Pago */}
+                {/* Selector de Método de Pago Neumórfico */}
                 <div>
                   <label className="text-xs font-bold text-zinc-300 block mb-2">
                     Selecciona tu canal de pago:
@@ -420,63 +412,63 @@ export default function TiendaPage() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("binance")}
-                      className={`p-2.5 rounded-xl border text-xs font-bold text-center transition-all cursor-pointer flex flex-col items-center gap-1 ${
+                      className={`p-3 rounded-2xl text-xs font-bold text-center transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
                         paymentMethod === "binance"
-                          ? "bg-amber-500/10 text-amber-300 border-amber-500/40 shadow-md"
-                          : "bg-[#0D0F12] text-zinc-400 border-white/5"
+                          ? "tactile-card-orange text-amber-300"
+                          : "tactile-inset text-zinc-400"
                       }`}
                     >
-                      <Coins className="h-4 w-4 text-amber-400" />
+                      <Coins className="h-5 w-5 text-amber-400" />
                       <span>Binance</span>
                     </button>
 
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("pagomovil")}
-                      className={`p-2.5 rounded-xl border text-xs font-bold text-center transition-all cursor-pointer flex flex-col items-center gap-1 ${
+                      className={`p-3 rounded-2xl text-xs font-bold text-center transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
                         paymentMethod === "pagomovil"
-                          ? "bg-cyan-500/10 text-cyan-300 border-cyan-500/40 shadow-md"
-                          : "bg-[#0D0F12] text-zinc-400 border-white/5"
+                          ? "tactile-card-cyan text-cyan-300"
+                          : "tactile-inset text-zinc-400"
                       }`}
                     >
-                      <CreditCard className="h-4 w-4 text-cyan-400" />
+                      <CreditCard className="h-5 w-5 text-cyan-400" />
                       <span>Pago Móvil</span>
                     </button>
 
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("zelle")}
-                      className={`p-2.5 rounded-xl border text-xs font-bold text-center transition-all cursor-pointer flex flex-col items-center gap-1 ${
+                      className={`p-3 rounded-2xl text-xs font-bold text-center transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
                         paymentMethod === "zelle"
-                          ? "bg-purple-500/10 text-purple-300 border-purple-500/40 shadow-md"
-                          : "bg-[#0D0F12] text-zinc-400 border-white/5"
+                          ? "tactile-card text-purple-300 border-purple-500/50"
+                          : "tactile-inset text-zinc-400"
                       }`}
                     >
-                      <DollarSign className="h-4 w-4 text-purple-400" />
+                      <DollarSign className="h-5 w-5 text-purple-400" />
                       <span>Zelle</span>
                     </button>
 
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("cash")}
-                      className={`p-2.5 rounded-xl border text-xs font-bold text-center transition-all cursor-pointer flex flex-col items-center gap-1 ${
+                      className={`p-3 rounded-2xl text-xs font-bold text-center transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
                         paymentMethod === "cash"
-                          ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/40 shadow-md"
-                          : "bg-[#0D0F12] text-zinc-400 border-white/5"
+                          ? "tactile-card text-emerald-300 border-emerald-500/50"
+                          : "tactile-inset text-zinc-400"
                       }`}
                     >
-                      <Banknote className="h-4 w-4 text-emerald-400" />
+                      <Banknote className="h-5 w-5 text-emerald-400" />
                       <span>Efectivo</span>
                     </button>
                   </div>
                 </div>
 
-                {/* Caja con Datos del Canal de Pago Seleccionado */}
-                <div className="p-4 rounded-2xl bg-[#0D0F12] border border-white/10 text-xs space-y-2">
+                {/* Caja de Datos Hundida */}
+                <div className="p-4 rounded-2xl tactile-inset text-xs space-y-2">
                   {paymentMethod === "binance" && (
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-zinc-500 text-[11px]">Binance Pay ID (Cero comisiones):</span>
+                        <span className="text-zinc-500 text-[11px]">Binance Pay ID (0% comisión):</span>
                         <button
                           type="button"
                           onClick={() => copyToClipboard(GYM_CONFIG.paymentMethods.binance.payId, "binance-id")}
@@ -564,7 +556,6 @@ export default function TiendaPage() {
                   )}
                 </div>
 
-                {/* Número de Referencia (si aplica) */}
                 {paymentMethod !== "cash" && (
                   <div>
                     <label className="text-xs font-bold text-zinc-300 block mb-1">
@@ -573,15 +564,15 @@ export default function TiendaPage() {
                     <input
                       type="text"
                       required
-                      placeholder="Últimos 4 o 6 dígitos de la transacción"
-                      className="w-full rounded-xl border border-white/10 bg-[#0D0F12] p-3 text-xs text-white outline-none focus:border-[#FF5E1A]"
+                      placeholder="Últimos dígitos de la transacción"
+                      className="w-full rounded-2xl tactile-inset p-3.5 text-xs text-white outline-none focus:border-[#FF5E1A]"
                     />
                   </div>
                 )}
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-[#FF5E1A] hover:bg-[#ff7235] text-zinc-950 text-xs font-black uppercase tracking-wider shadow-xl transition-all cursor-pointer"
+                  className="w-full py-4 rounded-2xl tactile-btn-orange text-zinc-950 text-xs font-black uppercase tracking-wider cursor-pointer"
                 >
                   Confirmar y Enviar Pedido
                 </button>
@@ -591,7 +582,6 @@ export default function TiendaPage() {
         </div>
       )}
 
-      {/* Footer Mínimo */}
       <footer className="border-t border-white/5 py-6 px-6 text-center text-[11px] text-zinc-600">
         Pre-ordenes del Shake Bar sujetas a disponibilidad · {GYM_CONFIG.name}
       </footer>

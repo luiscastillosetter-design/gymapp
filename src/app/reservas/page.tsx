@@ -4,16 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { 
   ArrowLeft, 
-  Calendar as CalendarIcon, 
   Clock, 
-  Users, 
   CheckCircle2, 
   Flame, 
-  Dumbbell, 
-  Filter, 
-  AlertCircle,
-  X,
-  Zap
+  Dumbbell
 } from "lucide-react";
 import { GYM_CONFIG } from "@/config/gym";
 
@@ -29,7 +23,6 @@ interface TimeSlot {
 }
 
 const INITIAL_SLOTS: TimeSlot[] = [
-  // Box Funcional (Clases con Coach)
   {
     id: "slot-1",
     time: "06:00 AM - 07:00 AM",
@@ -47,7 +40,7 @@ const INITIAL_SLOTS: TimeSlot[] = [
     activity: "Pilates Reformer & Movilidad",
     coach: "Coach Elena V.",
     capacity: 12,
-    booked: 12, // Lleno
+    booked: 12,
     userBooked: false,
   },
   {
@@ -90,15 +83,13 @@ const INITIAL_SLOTS: TimeSlot[] = [
     booked: 15,
     userBooked: false,
   },
-
-  // Zona Hierro (Musculación Libre con Aforo)
   {
     id: "iron-1",
     time: "06:00 AM - 08:00 AM",
     zone: "iron",
     activity: "Musculación: Mañana Temprana",
     capacity: 50,
-    booked: 24, // 48% aforo
+    booked: 24,
     userBooked: false,
   },
   {
@@ -107,7 +98,7 @@ const INITIAL_SLOTS: TimeSlot[] = [
     zone: "iron",
     activity: "Musculación: Media Mañana",
     capacity: 50,
-    booked: 18, // 36% aforo
+    booked: 18,
     userBooked: false,
   },
   {
@@ -116,7 +107,7 @@ const INITIAL_SLOTS: TimeSlot[] = [
     zone: "iron",
     activity: "Musculación: Hora Pico Tarde",
     capacity: 50,
-    booked: 46, // 92% aforo casi lleno
+    booked: 46,
     userBooked: false,
   },
   {
@@ -125,7 +116,7 @@ const INITIAL_SLOTS: TimeSlot[] = [
     zone: "iron",
     activity: "Musculación: Noche de Pesas",
     capacity: 50,
-    booked: 38, // 76% aforo
+    booked: 38,
     userBooked: false,
   },
 ];
@@ -145,7 +136,6 @@ export default function ReservasPage() {
   const [slots, setSlots] = useState<TimeSlot[]>(INITIAL_SLOTS);
   const [confirmationNotice, setConfirmationNotice] = useState<string | null>(null);
 
-  // Manejo de reserva / cancelación
   const handleToggleBooking = (slotId: string) => {
     setSlots((prev) =>
       prev.map((slot) => {
@@ -179,12 +169,11 @@ export default function ReservasPage() {
 
   return (
     <div className="min-h-screen bg-[#0D0F12] text-zinc-100 flex flex-col">
-      {/* 1. Header con retorno al portal */}
-      <header className="sticky top-0 z-40 bg-[#0D0F12]/90 backdrop-blur-md border-b border-white/10 px-6 lg:px-12 py-4 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#0D0F12]/90 backdrop-blur-xl border-b border-white/10 px-6 lg:px-12 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
             href="/mi-cuenta"
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
+            className="p-2.5 rounded-2xl tactile-btn-dark text-zinc-400 hover:text-white transition-colors"
             title="Volver a mi carnet"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -193,7 +182,7 @@ export default function ReservasPage() {
             <span className="text-base font-black tracking-wider uppercase text-white block leading-none">
               {GYM_CONFIG.name}
             </span>
-            <span className="text-[10px] tracking-widest text-[#00E5FF] uppercase font-bold">
+            <span className="text-[10px] tracking-widest text-[#00E5FF] uppercase font-bold mt-0.5 block">
               Horarios & Reservas
             </span>
           </div>
@@ -201,24 +190,22 @@ export default function ReservasPage() {
 
         <Link
           href="/mi-cuenta"
-          className="text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-white"
+          className="tactile-btn-dark px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider text-zinc-300 hover:text-white"
         >
           Mi Carnet QR →
         </Link>
       </header>
 
-      {/* Notificación de Confirmación en Pantalla */}
       {confirmationNotice && (
-        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-[#FF5E1A] text-zinc-950 px-5 py-2.5 rounded-full shadow-2xl text-xs font-black flex items-center gap-2 border border-amber-400 animate-bounce">
+        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 tactile-btn-orange text-zinc-950 px-5 py-2.5 rounded-full shadow-2xl text-xs font-black flex items-center gap-2 border border-amber-300 animate-bounce">
           <CheckCircle2 className="h-4 w-4" />
           {confirmationNotice}
         </div>
       )}
 
-      {/* 2. Contenido de Reservas */}
       <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 py-8 flex-1 flex flex-col gap-6">
         
-        {/* Cabecera de la sección */}
+        {/* Cabecera y Selector de Zona Táctil */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF]">
@@ -229,20 +216,19 @@ export default function ReservasPage() {
             </h1>
           </div>
 
-          {/* Filtro por Zona */}
-          <div className="inline-flex p-1 rounded-2xl bg-[#16191F] border border-white/10 self-start sm:self-auto">
+          <div className="inline-flex p-1 rounded-2xl tactile-inset self-start sm:self-auto">
             <button
               onClick={() => setSelectedZone("all")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                selectedZone === "all" ? "bg-white text-zinc-950 shadow-md" : "text-zinc-400 hover:text-white"
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+                selectedZone === "all" ? "tactile-btn-orange text-zinc-950" : "text-zinc-400 hover:text-white"
               }`}
             >
               Todo
             </button>
             <button
               onClick={() => setSelectedZone("functional")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1 ${
-                selectedZone === "functional" ? "bg-[#00E5FF] text-zinc-950 shadow-md" : "text-zinc-400 hover:text-white"
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1 ${
+                selectedZone === "functional" ? "tactile-btn-cyan text-zinc-950" : "text-zinc-400 hover:text-white"
               }`}
             >
               <Flame className="h-3.5 w-3.5" />
@@ -250,8 +236,8 @@ export default function ReservasPage() {
             </button>
             <button
               onClick={() => setSelectedZone("iron")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1 ${
-                selectedZone === "iron" ? "bg-[#FF5E1A] text-zinc-950 shadow-md" : "text-zinc-400 hover:text-white"
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1 ${
+                selectedZone === "iron" ? "tactile-btn-orange text-zinc-950" : "text-zinc-400 hover:text-white"
               }`}
             >
               <Dumbbell className="h-3.5 w-3.5" />
@@ -260,24 +246,24 @@ export default function ReservasPage() {
           </div>
         </div>
 
-        {/* 3. Selector de Días de la Semana */}
-        <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+        {/* Selector de Días en Relieve Neumórfico */}
+        <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none p-1.5 rounded-3xl tactile-inset">
           {WEEK_DAYS.map((item) => {
             const isSelected = selectedDay === item.date;
             return (
               <button
                 key={item.date}
                 onClick={() => setSelectedDay(item.date)}
-                className={`flex-1 min-w-[70px] py-3 px-3 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
+                className={`flex-1 min-w-[70px] py-3 px-3 rounded-2xl transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
                   isSelected
-                    ? "bg-gradient-to-b from-[#1F1916] to-[#16191F] border-[#FF5E1A] shadow-lg shadow-[#FF5E1A]/10"
-                    : "bg-[#16191F] border-white/10 text-zinc-400 hover:border-white/20 hover:text-white"
+                    ? "tactile-btn-orange text-zinc-950 scale-102"
+                    : "tactile-btn-dark text-zinc-400 hover:text-white"
                 }`}
               >
-                <span className={`text-[10px] uppercase font-bold tracking-wider ${isSelected ? "text-[#FF5E1A]" : "text-zinc-500"}`}>
+                <span className={`text-[10px] uppercase font-bold tracking-wider ${isSelected ? "text-zinc-950" : "text-zinc-500"}`}>
                   {item.day}
                 </span>
-                <span className={`text-sm font-black font-mono ${isSelected ? "text-white" : "text-zinc-300"}`}>
+                <span className={`text-sm font-black font-mono ${isSelected ? "text-zinc-950" : "text-zinc-200"}`}>
                   {item.date}
                 </span>
               </button>
@@ -285,13 +271,12 @@ export default function ReservasPage() {
           })}
         </div>
 
-        {/* 4. Lista de Slots / Clases del Día */}
-        <div className="space-y-3.5 mt-2">
+        {/* Lista de Slots con Relieve Físico */}
+        <div className="space-y-4 mt-2">
           {filteredSlots.map((slot) => {
             const percent = Math.round((slot.booked / slot.capacity) * 100);
             const isFull = slot.booked >= slot.capacity;
 
-            // Color del termómetro de aforo
             let aforoColor = "text-emerald-400";
             let aforoBg = "bg-emerald-500";
             if (percent >= 70 && percent < 90) {
@@ -305,19 +290,14 @@ export default function ReservasPage() {
             return (
               <div
                 key={slot.id}
-                className={`p-5 rounded-3xl border transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-                  slot.userBooked
-                    ? "bg-[#1A2226] border-cyan-500/50 shadow-xl"
-                    : "bg-[#16191F] border-white/10 hover:border-white/20"
+                className={`p-6 rounded-3xl transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                  slot.userBooked ? "tactile-card-cyan" : "tactile-card"
                 }`}
               >
-                {/* Datos de la Clase / Slot */}
                 <div className="space-y-1.5 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
-                      slot.zone === "functional"
-                        ? "bg-cyan-500/10 text-[#00E5FF] border border-cyan-500/20"
-                        : "bg-orange-500/10 text-[#FF5E1A] border border-orange-500/20"
+                    <span className={`text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full tactile-chip ${
+                      slot.zone === "functional" ? "text-[#00E5FF]" : "text-[#FF5E1A]"
                     }`}>
                       {slot.zone === "functional" ? "Box Funcional" : "Zona Hierro"}
                     </span>
@@ -337,7 +317,7 @@ export default function ReservasPage() {
                     </p>
                   )}
 
-                  {/* Barra de Aforo en Vivo */}
+                  {/* Barra de Aforo Hundida */}
                   <div className="pt-2 max-w-xs space-y-1">
                     <div className="flex items-center justify-between text-[11px] font-mono">
                       <span className="text-zinc-500">
@@ -347,21 +327,20 @@ export default function ReservasPage() {
                         {slot.booked}/{slot.capacity} ({percent}%)
                       </span>
                     </div>
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-2 w-full tactile-inset rounded-full overflow-hidden p-0.5">
                       <div
-                        className={`h-full ${aforoBg} transition-all duration-500`}
+                        className={`h-full ${aforoBg} rounded-full transition-all duration-500`}
                         style={{ width: `${percent}%` }}
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* Botón de Acción */}
                 <div className="sm:self-center shrink-0">
                   {slot.userBooked ? (
                     <button
                       onClick={() => handleToggleBooking(slot.id)}
-                      className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-[#00E5FF] text-xs font-black uppercase tracking-wider hover:bg-rose-500/20 hover:border-rose-500/40 hover:text-rose-400 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="w-full sm:w-auto px-5 py-3 rounded-2xl tactile-btn-dark border border-cyan-500/50 text-[#00E5FF] text-xs font-black uppercase tracking-wider hover:text-rose-400 flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <CheckCircle2 className="h-4 w-4" />
                       <span>Reservado (Cancelar)</span>
@@ -369,17 +348,17 @@ export default function ReservasPage() {
                   ) : isFull ? (
                     <button
                       disabled
-                      className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/5 border border-white/5 text-zinc-600 text-xs font-bold uppercase tracking-wider cursor-not-allowed"
+                      className="w-full sm:w-auto px-5 py-3 rounded-2xl tactile-inset text-zinc-600 text-xs font-bold uppercase tracking-wider cursor-not-allowed"
                     >
                       Clase Llena
                     </button>
                   ) : (
                     <button
                       onClick={() => handleToggleBooking(slot.id)}
-                      className={`w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-md cursor-pointer ${
+                      className={`w-full sm:w-auto px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
                         slot.zone === "functional"
-                          ? "bg-[#00E5FF] text-zinc-950 hover:bg-[#33ebff]"
-                          : "bg-[#FF5E1A] text-zinc-950 hover:bg-[#ff7638]"
+                          ? "tactile-btn-cyan text-zinc-950"
+                          : "tactile-btn-orange text-zinc-950"
                       }`}
                     >
                       Apartar Cupo
@@ -393,7 +372,6 @@ export default function ReservasPage() {
 
       </main>
 
-      {/* Footer Mínimo */}
       <footer className="border-t border-white/5 py-6 px-6 text-center text-[11px] text-zinc-600">
         Políticas de reserva: Cancelaciones permitidas hasta 2 horas antes de la sesión.
       </footer>
